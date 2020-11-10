@@ -1,6 +1,5 @@
 package com.api.prismo.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,7 +26,6 @@ public class Transaction implements Serializable {
 
     private double amount;
 
-    @JsonFormat(pattern="yyyy-MM-dd T HH:mm:ss")
     private LocalDateTime lastUpdate;
 
     public long getId() {

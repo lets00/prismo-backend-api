@@ -14,6 +14,10 @@ public class OperationType implements Serializable {
 
     private String description;
 
+    public OperationType(String description){
+        this.description = description;
+    }
+
     public long getId() {
         return id;
     }
