@@ -1,6 +1,8 @@
 package com.api.prismo.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,16 +17,14 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="account_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
 
-    @ManyToOne
-    @JoinColumn(name="operationtype_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private OperationType operationType;
 
-    private long accountId;
-    private long operationsTypeId;
     private double amount;
 
     @JsonFormat(pattern="yyyy-MM-dd T HH:mm:ss")
@@ -38,20 +38,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    public long getOperationsTypeId() {
-        return operationsTypeId;
+    public OperationType getOperationType() {
+        return operationType;
     }
 
-    public void setOperationsTypeId(long operationsTypeId) {
-        this.operationsTypeId = operationsTypeId;
+    public void setOperationType(OperationType operationType) {
+        this.operationType = operationType;
     }
 
     public double getAmount() {

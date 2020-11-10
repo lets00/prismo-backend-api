@@ -2,7 +2,6 @@ package com.api.prismo.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name="ACCOUNT")
@@ -11,20 +10,16 @@ public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="account_id")
-    private long id;
+    private long accountId;
 
     private String documentNumber;
 
-    @OneToMany(mappedBy="ACCOUNT",cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
-
-    public long getId() {
-        return id;
+    public long getAccountId() {
+        return accountId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setAccountId(long id) {
+        this.accountId = id;
     }
 
     public String getDocumentNumber() {

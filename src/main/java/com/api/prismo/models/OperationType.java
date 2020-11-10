@@ -2,7 +2,6 @@ package com.api.prismo.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name="OPERATIONTYPE")
@@ -11,13 +10,9 @@ public class OperationType implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="operationtype_id")
     private long id;
 
     private String description;
-
-    @OneToMany(mappedBy="OPERATIONTYPE",cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
 
     public long getId() {
         return id;
