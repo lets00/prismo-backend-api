@@ -14,15 +14,16 @@ public class AccountResource {
     private AccountRepository ar;
 
     @PostMapping("/")
-    public ResponseEntity createAccount(@RequestBody AccountPost accountPost) {
+    public ResponseEntity<Account> createAccount(@RequestBody AccountPost accountPost) {
         Account foundAccount = ar.findByDocumentNumber(accountPost.getDocumentNumber());
         if (foundAccount != null) {
             return ResponseEntity.badRequest().build();
         }
         Account newAccount = new Account();
+        newAccount.setAvailableCreditLimit(100.0);
         newAccount.setDocumentNumber(accountPost.getDocumentNumber());
         ar.save(newAccount);
-        return ResponseEntity.created(null).build();
+        return ResponseEntity.ok(newAccount);
     }
 
     @GetMapping("/{id}")

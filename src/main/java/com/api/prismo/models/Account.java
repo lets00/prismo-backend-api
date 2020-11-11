@@ -14,6 +14,8 @@ public class Account implements Serializable {
 
     private String documentNumber;
 
+    private double availableCreditLimit;
+
     public long getAccountId() {
         return accountId;
     }
@@ -28,5 +30,13 @@ public class Account implements Serializable {
 
     public void setDocumentNumber(String documentNumber) {
         this.documentNumber = documentNumber;
+    }
+
+    public double getAvailableCreditLimit() {
+        return availableCreditLimit;
+    }
+
+    public void setAvailableCreditLimit(double availableCreditLimit) {
+        this.availableCreditLimit = availableCreditLimit;
     }
 }

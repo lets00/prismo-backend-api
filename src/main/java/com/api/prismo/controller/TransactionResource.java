@@ -36,17 +36,43 @@ public class TransactionResource {
         return foundOperationType != null;
     }
 
+    private boolean canDebit(long id, double value, long operationType) {
+        if (operationType != 4){
+            Account user = ar.findById(id);
+            if (user.getAvailableCreditLimit() - value >=0 ){
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
     @PostMapping("/")
     public ResponseEntity createNewTransaction(@RequestBody TransactionPost transaction){
         if (isValidAccountId(transaction.getAccountId()) && isValidOperationType(transaction.getOperationTypeId())) {
-            Transaction newTransaction = new Transaction();
-            newTransaction.setAmount(transaction.getAmount());
-            newTransaction.setAccount(ar.findById(transaction.getAccountId()));
-            newTransaction.setOperationType(otr.findById(transaction.getOperationTypeId()));
-            newTransaction.setLastUpdate(LocalDateTime.now());
-            tr.save(newTransaction);
+            if (canDebit(transaction.getAccountId(), transaction.getAmount(), transaction.getOperationTypeId())) {
+                Transaction newTransaction = new Transaction();
+                newTransaction.setAmount(transaction.getAmount());
+                newTransaction.setAccount(ar.findById(transaction.getAccountId()));
+                newTransaction.setOperationType(otr.findById(transaction.getOperationTypeId()));
+                newTransaction.setLastUpdate(LocalDateTime.now());
+                tr.save(newTransaction);
 
-            return ResponseEntity.created(null).build();
+                Account user = ar.findById(transaction.getAccountId());
+                double newCredit;
+                if (transaction.getOperationTypeId() != 4) {
+                    newCredit = user.getAvailableCreditLimit() - transaction.getAmount();
+                } else {
+                    newCredit = user.getAvailableCreditLimit() + transaction.getAmount();
+                }
+                user.setAvailableCreditLimit(newCredit);
+                ar.save(user);
+
+                return ResponseEntity.created(null).build();
+            }
+            else {
+                return ResponseEntity.unprocessableEntity().build();
+            }
         } else {
             return ResponseEntity.unprocessableEntity().build();
         }

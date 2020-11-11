@@ -18,16 +18,17 @@ public class OperationTypeSeed implements CommandLineRunner {
     }
 
     private void loadOperationType() {
-        if (otr.count() == 0) {
-            System.out.println("-----------Seeding operations type-----------");
-            OperationType operationType1 = new OperationType("COMPRA A VISTA");
-            OperationType operationType2 = new OperationType("COMPRA PARCELADA");
-            OperationType operationType3 = new OperationType("SAQUE");
-            OperationType operationType4 = new OperationType("PAGAMENTO");
-            otr.save(operationType1);
-            otr.save(operationType2);
-            otr.save(operationType3);
-            otr.save(operationType4);
-        }
+
+//        if (otr.count() == 0) {
+//            System.out.println("-----------Seeding operations type-----------");
+//            OperationType operationType1 = new OperationType("COMPRA A VISTA");
+//            OperationType operationType2 = new OperationType("COMPRA PARCELADA");
+//            OperationType operationType3 = new OperationType("SAQUE");
+//            OperationType operationType4 = new OperationType("PAGAMENTO");
+//            otr.save(operationType1);
+//            otr.save(operationType2);
+//            otr.save(operationType3);
+//            otr.save(operationType4);
+//        }
     }
 }
